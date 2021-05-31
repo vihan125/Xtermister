@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'patient.dart';
+import 'package:xth_trimester/dataBase/patient_model.dart';
 
 
 class Details extends StatefulWidget {
@@ -18,7 +19,7 @@ class _DetailsState extends State<Details> {
   List<String> _methods = ['LMP','CD','US','EDC','Born'];
   DateTime _chosenDateTime;
 
-  void _showDatePicker(ctx,Patient p) {
+  void _showDatePicker(ctx,Mother p) {
     // showCupertinoModalPopup is a built-in function of the cupertino library
     showCupertinoModalPopup(
         context: ctx,
@@ -52,7 +53,7 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
-    Patient p = data['Patient'];
+    Mother p = data['Patient'];
     return Scaffold(
       appBar: AppBar(
         title: Text("Patient Details"),
@@ -151,7 +152,7 @@ class _DetailsState extends State<Details> {
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
-                          controller: TextEditingController(text:p.p_phone),
+                          controller: TextEditingController(text:p.pNumber),
                           enabled: isEnabled,
                           decoration: decoration,
                         ),
@@ -180,7 +181,7 @@ class _DetailsState extends State<Details> {
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
-                          controller: TextEditingController(text:p.s_phone),
+                          controller: TextEditingController(text:p.sNumber),
                           enabled: isEnabled,
                           decoration: decoration,
                         ),
@@ -252,30 +253,31 @@ class _DetailsState extends State<Details> {
                       )),
                       Theme(
                         data: Theme.of(context).copyWith(
-                          canvasColor: Colors.redAccent[100],
+                          canvasColor: Colors.grey[500],
                         ),
                         child: Container(
                           margin: EdgeInsets.fromLTRB(0, 0, 70, 0),
                           padding: EdgeInsets.symmetric(horizontal: 10,vertical: 2),
                           decoration: BoxDecoration(
-                            color: Colors.red[100],
+                            color: Colors.grey[600],
                             borderRadius: BorderRadius.circular(10)
                           ),
 
                           child: DropdownButton(
                             isExpanded: true,
-                              icon: Icon(Icons.keyboard_arrow_down),
-                              value: p.method,
+                              icon: Icon(Icons.keyboard_arrow_down,
+                              color: Colors.white,),
+                              value: p.calMethod,
                               iconSize: 20,
                               elevation: 40,
                               underline: SizedBox(),
-                              style: TextStyle(color: Colors.black,
+                              style: TextStyle(color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,),
 
                               onChanged: (newValue){
                                 setState(() {
-                                  p.method= newValue;
+                                  p.calMethod= newValue;
                                 });
                               },
                               items: _methods.map((method){
@@ -313,8 +315,8 @@ class _DetailsState extends State<Details> {
                                 Container(
                                   child: IconButton(
                                     icon: Icon(Icons.mode_edit,
-                                    size: 20,),
-                                    color: Colors.blueAccent,
+                                    size: 25,),
+                                    color: Colors.blueGrey,
                                     onPressed: (){
                                       _showDatePicker(context,p);
                                     },

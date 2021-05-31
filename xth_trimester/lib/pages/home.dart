@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'patient.dart';
+import 'package:xth_trimester/dataBase/db_helper.dart';
+import 'package:xth_trimester/dataBase/patient_model.dart';
+import 'package:sqflite/sqflite.dart';
 
 
 
@@ -14,11 +17,31 @@ class _HomeState extends State<Home> {
   @override
   void initState(){
     super.initState();
-    patients = original;
-    setupList();
+    getData();
   }
 
-  List<Patient> patients;
+  List <Mother> Mothers=[];
+
+  void getData()async {
+    Database db = await DBHelper.instance.db;
+    var mothers = await db.rawQuery('select * from mothers');
+    print(mothers);
+    int length = mothers.length;
+    if (length>0){
+      for (int i =0; i< length; i++){
+        Mother m = Mother.fromMap(mothers[i]);
+        Mothers.add(m);
+      }
+    }
+
+    patients = Mothers;
+    print(patients);
+
+  }
+
+
+
+  List<Mother> patients;
 
   List<Patient> original =[
     Patient(firstName: "Binuri", lastName: "Ranatunga", embryoAge: 70, p_phone: "07xxxxxxxx", s_phone: "011xxxxxxx"),
@@ -111,10 +134,10 @@ class _HomeState extends State<Home> {
                             }
 
                             else if ((i == 1) && (!isSelected[i])) {
-                              List<Patient> filterRed = [];
-                              for (int k =0; k < original.length; k++){
-                                if (original[k].embryoAge >258){
-                                  filterRed.add(original[k]);
+                              List<Mother> filterRed = [];
+                              for (int k =0; k < Mothers.length; k++){
+                                if (Mothers[k].embryoAge >258){
+                                  filterRed.add(Mothers[k]);
                                 }
                               }
                               patients = filterRed;
@@ -126,15 +149,15 @@ class _HomeState extends State<Home> {
                             }
 
                             else if ((i == 1) && (isSelected[i])) {
-                              patients = original;
+                              patients = Mothers;
                               isSelected[i] = !isSelected[i];
                             }
 
                             else if ((i == 2) && (!isSelected[i])) {
-                              List<Patient> filterOrange = [];
-                              for (int k =0; k < original.length; k++){
-                                if ((original[k].embryoAge > 195)&&(original[k].embryoAge <= 258)){
-                                  filterOrange.add(original[k]);
+                              List<Mother> filterOrange = [];
+                              for (int k =0; k < Mothers.length; k++){
+                                if ((Mothers[k].embryoAge > 195)&&(Mothers[k].embryoAge <= 258)){
+                                  filterOrange.add(Mothers[k]);
                                 }
                               }
                               patients = filterOrange;
@@ -146,15 +169,15 @@ class _HomeState extends State<Home> {
                             }
 
                             else if ((i == 2) && (isSelected[i])) {
-                              patients = original;
+                              patients = Mothers;
                               isSelected[i] = !isSelected[i];
                             }
 
                             else if ((i == 3) && (!isSelected[i])) {
-                              List<Patient> filterAmber = [];
-                              for (int k =0; k < original.length; k++){
-                                if ((original[k].embryoAge > 85)&&(original[k].embryoAge <= 195)){
-                                  filterAmber.add(original[k]);
+                              List<Mother> filterAmber = [];
+                              for (int k =0; k < Mothers.length; k++){
+                                if ((Mothers[k].embryoAge > 85)&&(Mothers[k].embryoAge <= 195)){
+                                  filterAmber.add(Mothers[k]);
                                 }
                               }
                               patients = filterAmber;
@@ -166,15 +189,15 @@ class _HomeState extends State<Home> {
                             }
 
                             else if ((i == 3) && (isSelected[i])) {
-                              patients = original;
+                              patients = Mothers;
                               isSelected[i] = !isSelected[i];
                             }
 
                             else if ((i == 4) && (!isSelected[i])) {
-                              List<Patient> filterGreen = [];
-                              for (int k =0; k < original.length; k++){
-                                if ((original[k].embryoAge > 0)&&(original[k].embryoAge <= 84)){
-                                  filterGreen.add(original[k]);
+                              List<Mother> filterGreen = [];
+                              for (int k =0; k < Mothers.length; k++){
+                                if ((Mothers[k].embryoAge > 0)&&(Mothers[k].embryoAge <= 84)){
+                                  filterGreen.add(Mothers[k]);
                                 }
                               }
                               patients = filterGreen;
@@ -186,15 +209,15 @@ class _HomeState extends State<Home> {
                             }
 
                             else if ((i == 4) && (isSelected[i])) {
-                              patients = original;
+                              patients = Mothers;
                               isSelected[i] = !isSelected[i];
                             }
 
                             else if ((i == 5) && (!isSelected[i])) {
-                              List<Patient> filterBlue = [];
-                              for (int k =0; k < original.length; k++){
+                              List<Mother> filterBlue = [];
+                              for (int k =0; k < Mothers.length; k++){
                                 if (original[k].embryoAge < 1){
-                                  filterBlue.add(original[k]);
+                                  filterBlue.add(Mothers[k]);
                                 }
                               }
                               patients = filterBlue;
@@ -206,7 +229,7 @@ class _HomeState extends State<Home> {
                             }
 
                             else if ((i == 5) && (isSelected[i])) {
-                              patients = original;
+                              patients = Mothers;
                               isSelected[i] = !isSelected[i];
                             }
 
