@@ -36,7 +36,7 @@ class _DetailsState extends State<Details> {
                     onDateTimeChanged: (val) {
                       setState(() {
                         _chosenDateTime = val;
-                        p.cal_time = val;
+                        // Database ekta yawanna oni aluth date eka
                       });
                     }),
               ),
@@ -253,7 +253,7 @@ class _DetailsState extends State<Details> {
                       )),
                       Theme(
                         data: Theme.of(context).copyWith(
-                          canvasColor: Colors.grey[500],
+                          canvasColor: Colors.grey[400],
                         ),
                         child: Container(
                           margin: EdgeInsets.fromLTRB(0, 0, 70, 0),
@@ -307,7 +307,7 @@ class _DetailsState extends State<Details> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
-                                Text(p.cal_time.year.toString() +"-"+p.cal_time.month.toString()+"-"+p.cal_time.day.toString(),
+                                Text(p.cal_time,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold
@@ -334,7 +334,7 @@ class _DetailsState extends State<Details> {
         ],
       ),
 
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[50],
     );
   }
 }

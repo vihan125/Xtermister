@@ -26,30 +26,30 @@ class DBHelper {
 
   _onCreate(Database db, int version) async {
     await db
-        .execute('CREATE TABLE mothers ('
-        'id integer(10) PRIMARY KEY,'
-        'firstName TEXT not null,'
+        .execute('CREATE TABLE IF NOT EXISTS mothers ('
+        'id INTEGER PRIMARY KEY AUTOINCREMENT ,'
+        'firstName TEXT NOT NULL,'
         'lastName TEXT,'
-        'pNumber TEXT not null,'
+        'pNumber TEXT NOT NULL,'
         'sNumber TEXT,'
-        'embryoAge integer(4) not null,'
+        'embryoAge INTEGER(4) NOT NULL,'
         'calMethod TEXT)');
 
     await db
         .execute(
-        'insert into mothers values ("1","Selena","Gomez","0771212121","0112121212", "266", "LMP")');
+        'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Selena","Gomez","0771212121","0112121212", "266", "LMP")');
 
     await db
         .execute(
-        'insert into mothers values ("2","Taylor","Swift","0771212121","0112121212", "70", "LMP")');
+        'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Taylor","Swift","0771212121","0112121212", "70", "LMP")');
 
     await db
         .execute(
-        'insert into mothers values ("3","Anne","Marrie","0771212121","0112121212", "150", "LMP")');
+        'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Anne","Marrie","0771212121","0112121212", "150", "LMP")');
 
     await db
         .execute(
-        'insert into mothers values ("4","Latha","Walpola","0771212121","0112121212", "200", "LMP")');
+        'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Latha","Walpola","0771212121","0112121212", "200", "LMP")');
   }
 }
 

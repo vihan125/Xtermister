@@ -7,7 +7,7 @@ class Mother {
   int embryoAge;
   String calMethod;
   String icon;
-  DateTime cal_time;
+  String cal_time;
   String ageWeeks;
 
   Mother(this.id, this.firstName, this.lastName, this.embryoAge, this.calMethod,
@@ -23,6 +23,7 @@ class Mother {
       'sNumber': sNumber,
       'embryoAge': embryoAge,
       'calMethod': calMethod,
+      'cal_time' : cal_time,
     };
     return map;
   }
@@ -53,11 +54,12 @@ class Mother {
     sNumber = map['sNumber'];
     embryoAge = map['embryoAge'];
     calMethod = map['calMethod'];
+    cal_time = map['cal_time'];
     setIcon();
-    this.ageWeeks =
-        (embryoAge ~/ 7).toString() + "W " + (embryoAge % 7).toString() + "d";
+    this.ageWeeks = (embryoAge ~/ 7).toString() + "W " + (embryoAge % 7).toString() + "d";
     if (this.cal_time == null) {
-      this.cal_time = DateTime.now();
+      DateTime d = DateTime.now();
+      this.cal_time = d.year.toString()+"-"+d.month.toString()+"-"+d.day.toString();
     }
   }
 }
