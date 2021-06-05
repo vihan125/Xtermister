@@ -7,7 +7,7 @@ class Mother {
   int embryoAge;
   String calMethod;
   String icon;
-  String cal_time;
+  String calDate;
   String ageWeeks;
 
   Mother(this.id, this.firstName, this.lastName, this.embryoAge, this.calMethod,
@@ -23,7 +23,7 @@ class Mother {
       'sNumber': sNumber,
       'embryoAge': embryoAge,
       'calMethod': calMethod,
-      'cal_time' : cal_time,
+      'cal_time' : calDate,
     };
     return map;
   }
@@ -54,12 +54,22 @@ class Mother {
     sNumber = map['sNumber'];
     embryoAge = map['embryoAge'];
     calMethod = map['calMethod'];
-    cal_time = map['cal_time'];
+    calDate = map['calDate'];
     setIcon();
     this.ageWeeks = (embryoAge ~/ 7).toString() + "W " + (embryoAge % 7).toString() + "d";
-    if (this.cal_time == null) {
+    if (this.calDate == null) {
       DateTime d = DateTime.now();
-      this.cal_time = d.year.toString()+"-"+d.month.toString()+"-"+d.day.toString();
+      if((d.month<10) && (d.day<10)){
+        this.calDate = d.year.toString()+"-0"+d.month.toString()+"-0"+d.day.toString();
+      }
+      else if ((d.month<10) && (d.day>=10)){
+        this.calDate = d.year.toString()+"-0"+d.month.toString()+"-"+d.day.toString();
+      }
+      else if ((d.month>=10) && (d.day<10)){
+        this.calDate= d.year.toString()+"-"+d.month.toString()+"-0"+d.day.toString();
+      }else {
+        this.calDate = d.year.toString() + "-" + d.month.toString() + "-" + d.day.toString();
+      }
     }
   }
 }

@@ -33,7 +33,8 @@ class DBHelper {
         'pNumber TEXT NOT NULL,'
         'sNumber TEXT,'
         'embryoAge INTEGER(4) NOT NULL,'
-        'calMethod TEXT)');
+        'calMethod TEXT,'
+        'calDate TEXT)');
 
     await db
         .execute(
