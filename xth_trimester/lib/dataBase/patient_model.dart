@@ -9,6 +9,7 @@ class Mother {
   String icon;
   String calDate;
   String ageWeeks;
+  String dueDate;
 
   Mother(this.id, this.firstName, this.lastName, this.embryoAge, this.calMethod,
       this.pNumber, this.sNumber);
@@ -24,6 +25,7 @@ class Mother {
       'embryoAge': embryoAge,
       'calMethod': calMethod,
       'cal_time' : calDate,
+      'dueDate' : dueDate,
     };
     return map;
   }
@@ -55,8 +57,12 @@ class Mother {
     embryoAge = map['embryoAge'];
     calMethod = map['calMethod'];
     calDate = map['calDate'];
+    dueDate = map['dueDate'];
+
+
     setIcon();
     this.ageWeeks = (embryoAge ~/ 7).toString() + "W " + (embryoAge % 7).toString() + "d";
+
     if (this.calDate == null) {
       DateTime d = DateTime.now();
       if((d.month<10) && (d.day<10)){
@@ -69,6 +75,23 @@ class Mother {
         this.calDate= d.year.toString()+"-"+d.month.toString()+"-0"+d.day.toString();
       }else {
         this.calDate = d.year.toString() + "-" + d.month.toString() + "-" + d.day.toString();
+      }
+    }
+
+    if (this.dueDate == null){
+      DateTime t = DateTime.parse(this.calDate);
+      DateTime due = t.add(Duration(days:280));
+
+      if((due.month<10) && (due.day<10)){
+        this.dueDate = due.year.toString()+"-0"+due.month.toString()+"-0"+due.day.toString();
+      }
+      else if ((due.month<10) && (due.day>=10)){
+        this.dueDate = due.year.toString()+"-0"+due.month.toString()+"-"+due.day.toString();
+      }
+      else if ((due.month>=10) && (due.day<10)){
+        this.dueDate= due.year.toString()+"-"+due.month.toString()+"-0"+due.day.toString();
+      }else {
+        this.dueDate = due.year.toString() + "-" + due.month.toString() + "-" + due.day.toString();
       }
     }
   }

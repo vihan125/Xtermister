@@ -22,6 +22,22 @@ class _DetailsState extends State<Details> {
   DateTime _chosenDateTime;
   Mother p;
 
+  String getDate (DateTime d){
+
+    if((d.month<10) && (d.day<10)){
+      return d.year.toString()+"-0"+d.month.toString()+"-0"+d.day.toString();
+    }
+    else if ((d.month<10) && (d.day>=10)){
+      return d.year.toString()+"-0"+d.month.toString()+"-"+d.day.toString();
+    }
+    else if ((d.month>=10) && (d.day<10)){
+      return d.year.toString()+"-"+d.month.toString()+"-0"+d.day.toString();
+    }else {
+      return d.year.toString() + "-" + d.month.toString() + "-" + d.day.toString();
+    }
+
+  }
+
   void _showDatePicker(ctx,Mother p) {
     // showCupertinoModalPopup is a built-in function of the cupertino library
     _chosenDateTime = DateTime.parse(p.calDate);
@@ -51,21 +67,13 @@ class _DetailsState extends State<Details> {
                   DateTime today = DateTime.now();
                   DateTime pickedDate = _chosenDateTime;
                   int difference = (today.difference(pickedDate).inHours/24).round();
+                  DateTime dueDate = pickedDate.add(Duration(days:280));
                   int id = p.id;
-                  String date;
-                  if((_chosenDateTime.month<10) && (_chosenDateTime.day<10)){
-                     date = _chosenDateTime.year.toString()+"-0"+_chosenDateTime.month.toString()+"-0"+_chosenDateTime.day.toString();
-                  }
-                  else if ((_chosenDateTime.month<10) && (_chosenDateTime.day>=10)){
-                     date = _chosenDateTime.year.toString()+"-0"+_chosenDateTime.month.toString()+"-"+_chosenDateTime.day.toString();
-                  }
-                  else if ((_chosenDateTime.month>=10) && (_chosenDateTime.day<10)){
-                     date = _chosenDateTime.year.toString()+"-"+_chosenDateTime.month.toString()+"-0"+_chosenDateTime.day.toString();
-                  }else {
-                     date = _chosenDateTime.year.toString() + "-" + _chosenDateTime.month.toString() + "-" + _chosenDateTime.day.toString();
-                  }
+                  String date = getDate(_chosenDateTime);
+                  String due = getDate(dueDate);
+
                   Database db = await DBHelper.instance.db;
-                  await db.execute('UPDATE mothers SET calDate = "$date",embryoAge = "$difference" WHERE id = $id');
+                  await db.execute('UPDATE mothers SET calDate = "$date",embryoAge = "$difference",dueDate="$due" WHERE id = $id');
 
                   var mom = await db.rawQuery('select * from mothers where id = $id');
                   Mother m = Mother.fromMap(mom[0]);
@@ -394,10 +402,29 @@ class _DetailsState extends State<Details> {
                                     fontWeight: FontWeight.bold
                                 ),),
                             ),
-
-
                         ],
                       ),
+
+
+                      TableRow(
+                        children: [
+                          Center(child: Padding(
+                            padding: EdgeInsets.fromLTRB(0,10,0,0),
+                            child: Text("Estimated Due Date",
+                              style: TextStyle(fontSize: 15.0,
+                                  color: Colors.grey[800]),),
+                          )),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10,10,0,0),
+                            child: Text(p.dueDate,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold
+                              ),),
+                          ),
+                        ],
+                      )
+
                     ],
                   ),
                 ),

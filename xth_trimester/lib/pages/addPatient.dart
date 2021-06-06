@@ -27,7 +27,25 @@ class _AddPatientState extends State<AddPatient> {
 
   int difference;
 
+  String dueDate = "";
+
   List<String> _methods = ['LMP','CD','US','EDC','Born'];
+
+  String getDate (DateTime d){
+
+    if((d.month<10) && (d.day<10)){
+      return d.year.toString()+"-0"+d.month.toString()+"-0"+d.day.toString();
+    }
+    else if ((d.month<10) && (d.day>=10)){
+      return d.year.toString()+"-0"+d.month.toString()+"-"+d.day.toString();
+    }
+    else if ((d.month>=10) && (d.day<10)){
+      return d.year.toString()+"-"+d.month.toString()+"-0"+d.day.toString();
+    }else {
+      return d.year.toString() + "-" + d.month.toString() + "-" + d.day.toString();
+    }
+
+  }
 
   void _showDatePicker(ctx) {
     // showCupertinoModalPopup is a built-in function of the cupertino library
@@ -44,20 +62,13 @@ class _AddPatientState extends State<AddPatient> {
                     initialDateTime: DateTime.now(),
                     mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (val) {
-                      String d;
+                      String d = getDate(val);
                       int dif = ((DateTime.now()).difference(val).inHours/24).round();
-                      if((val.month<10) && (val.day<10)){
-                        d = val.year.toString()+"-0"+val.month.toString()+"-0"+val.day.toString();
-                      }
-                      else if ((val.month<10) && (val.day>=10)){
-                        d = val.year.toString()+"-0"+val.month.toString()+"-"+val.day.toString();
-                      }
-                      else if ((val.month>=10) && (val.day<10)){
-                        d = val.year.toString()+"-"+val.month.toString()+"-0"+val.day.toString();
-                      }else {
-                        d = val.year.toString() + "-" + val.month.toString() + "-" + val.day.toString();
-                      }
+                      DateTime exp = val.add(Duration(days:280));
+                      String due = getDate(exp);
+
                       setState(() {
+                        dueDate = due;
                         date = d;
                         difference = dif;
                       });
@@ -419,7 +430,7 @@ class _AddPatientState extends State<AddPatient> {
                         Database db = await DBHelper.instance.db;
                         await db
                             .execute(
-                            'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod,calDate) values ("$firstName","$lastName","$pNumber","$sNumber", "$difference", "$method","$date")');
+                            'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod,calDate,dueDate) values ("$firstName","$lastName","$pNumber","$sNumber", "$difference", "$method","$date","$dueDate")');
 
                         SnackBar(
                           content: Text("Patient added successfully !"),
