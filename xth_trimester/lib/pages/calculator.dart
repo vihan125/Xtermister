@@ -55,6 +55,8 @@ class _CalculatorState extends State<Calculator> with AutomaticKeepAliveClientMi
     super.build(context);
     return Scaffold(
       body:Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
@@ -67,7 +69,7 @@ class _CalculatorState extends State<Calculator> with AutomaticKeepAliveClientMi
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 50),
-              Text("Due Date Calender",
+              Text("Due Date Calculator",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

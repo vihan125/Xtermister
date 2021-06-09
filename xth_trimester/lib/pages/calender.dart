@@ -15,9 +15,8 @@ class _CalenderState extends State<Calender> with AutomaticKeepAliveClientMixin 
   CalendarController _controller;
   Map<DateTime, List<dynamic>> _events={};
   Map<DateTime, List<dynamic>> _getevents={};
-  List<dynamic> _selectedEvents;
+  List<dynamic> _selectedEvents = [];
   int length = -1;
-  List <Mother> Mothers=[];
 
   void initState(){
     super.initState();
@@ -34,7 +33,7 @@ class _CalenderState extends State<Calender> with AutomaticKeepAliveClientMixin 
     if (length>=0){
       for (int i =0; i< length; i++){
         Mother m = Mother.fromMap(mothers[i]);
-        DateTime d = DateTime.parse(m.calDate);
+        DateTime d = DateTime.parse(m.dueDate);
         if (_getevents[d] != null){
           _getevents[d].add(m);
         }else{
@@ -51,49 +50,151 @@ class _CalenderState extends State<Calender> with AutomaticKeepAliveClientMixin 
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-            body:TableCalendar(
-              events: _events,
-              initialCalendarFormat: CalendarFormat.month,
-              calendarStyle: CalendarStyle(
-                  canEventMarkersOverflow: true,
-                  todayColor: Colors.amber,
-                  selectedColor: Theme.of(context).primaryColor,
-                  todayStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                  color: Colors.white)),
-              headerStyle: HeaderStyle(
-                  centerHeaderTitle: true,
-                  formatButtonDecoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  formatButtonTextStyle: TextStyle(color: Colors.white),
-                  formatButtonShowsNext: false,
+            body:Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Colors.cyan[100],Colors.white],
+                ),
               ),
-              builders: CalendarBuilders(
-                    selectedDayBuilder: (context, date, events) => Container(
-                      margin: const EdgeInsets.all(4.0),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                      color: Colors.cyan[500],
-                      borderRadius: BorderRadius.circular(10.0)),
-                      child: Text(
-                      date.day.toString(),
-                      style: TextStyle(color: Colors.white),
-                      )),
-                    todayDayBuilder: (context, date, events) => Container(
-                      margin: const EdgeInsets.all(4.0),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(10.0)),
-                      child: Text(
-                      date.day.toString(),
-                      style: TextStyle(color: Colors.white),
-                      )),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+
+                    SizedBox(height: 50),
+                    Text("Due Date Calendar",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueGrey,
+                      ),),
+
+                    SizedBox(height: 25,),
+
+                    TableCalendar(
+                      events: _events,
+                      initialCalendarFormat: CalendarFormat.month,
+                      calendarStyle: CalendarStyle(
+                          canEventMarkersOverflow: true,
+                          todayColor: Colors.amber,
+                          selectedColor: Theme.of(context).primaryColor,
+                          todayStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                          color: Colors.white)),
+                      headerStyle: HeaderStyle(
+                          centerHeaderTitle: true,
+                          formatButtonDecoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          formatButtonTextStyle: TextStyle(color: Colors.white),
+                          formatButtonShowsNext: false,
+                      ),
+                      builders: CalendarBuilders(
+                            selectedDayBuilder: (context, date, events) => Container(
+                              margin: const EdgeInsets.all(4.0),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                              color: Colors.cyan[500],
+                              borderRadius: BorderRadius.circular(10.0)),
+                              child: Text(
+                              date.day.toString(),
+                              style: TextStyle(color: Colors.white),
+                              )),
+                            todayDayBuilder: (context, date, events) => Container(
+                              margin: const EdgeInsets.all(4.0),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(10.0)),
+                              child: Text(
+                              date.day.toString(),
+                              style: TextStyle(color: Colors.white),
+                              )),
+                            markersBuilder: (context,date,events,holidays){
+                              final children = <Widget>[];
+                              if(events.isNotEmpty){
+                                children.add(Stack(
+                                  children: <Widget>[
+                                    Container(
+                                        margin: const EdgeInsets.all(4.0),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            color: Colors.redAccent,
+                                            borderRadius: BorderRadius.circular(10.0)),
+                                        child: Text(
+                                          date.day.toString(),
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                    ),
+                                    Positioned(
+                                      bottom: 1,
+                                      right: 1,
+                                      child: Container(
+                                          color: Colors.orange[400],
+                                          padding: EdgeInsets.symmetric(vertical: 1.5, horizontal: 4),
+                                          child: Text("${events.length}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                          ),)),
+                                    )
+                                  ],
+                                )
+
+                                );
+                              }
+                              return children;
+                            },
+                      ),
+                      calendarController: _controller,
+                      onDaySelected: (day,events){
+                        setState(() {
+                          _selectedEvents = events;
+                        });
+                      },
+
                     ),
-              calendarController: _controller,
+
+                  SizedBox(height: 20,),
+
+                   ListView.builder(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _selectedEvents.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 1.0, horizontal: 4.0),
+                            child: Card(
+                              child: ListTile(
+                                onTap: () {
+                                  Navigator.pushNamed(context, "/details",
+                                      arguments: {'Patient': _selectedEvents[index]});
+                                },
+                                title: Text(
+                                    _selectedEvents[index].firstName + " " +
+                                        _selectedEvents[index].lastName),
+                                subtitle: Text(_selectedEvents[index].ageWeeks),
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(8.0)),
+                                  child: Image.asset(_selectedEvents[index].icon),
+                                ),
+                              ),
+                            ),
+                        );
+                        }
+                      ),
+
+                    SizedBox(height: 30,),
+                  ],
+                ),
+              ),
             )
     );
   }

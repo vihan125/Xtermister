@@ -354,7 +354,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
                         child: Card(
                           child: ListTile(
                             onTap: () {
-                              Navigator.pushReplacementNamed(context, "/details",
+                              Navigator.pushNamed(context, "/details",
                                   arguments: {'Patient': patients[index]});
                             },
                             title: Text(

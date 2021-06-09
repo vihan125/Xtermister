@@ -3,6 +3,7 @@ import 'pages/home.dart';
 import 'pages/details.dart';
 import 'pages/addPatient.dart';
 import 'pages/navigator.dart';
+import 'pages/calender.dart';
 
 
 void main() => runApp(MaterialApp(
@@ -11,6 +12,7 @@ void main() => runApp(MaterialApp(
     '/home': (context) => Home(),
     '/details': (context) => Details(),
     '/add': (context) => AddPatient(),
+    '/calendar': (context) => Calender(),
 
   },
 ));

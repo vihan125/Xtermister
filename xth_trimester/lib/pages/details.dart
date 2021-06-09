@@ -92,17 +92,17 @@ class _DetailsState extends State<Details> {
     p = data['Patient'];
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context){
-            return IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: (){
-                Navigator.pushReplacementNamed(context, '/');
-              },
-              color: Colors.white,
-            );
-          }
-        ),
+//        leading: Builder(
+//          builder: (BuildContext context){
+//            return IconButton(
+//              icon: Icon(Icons.arrow_back),
+//              onPressed: (){
+//                Navigator.pushReplacementNamed(context, '/');
+//              },
+//              color: Colors.white,
+//            );
+//          }
+//        ),
         title: Text("Patient Details"),
         centerTitle: true,
         backgroundColor: Colors.cyan[300],
