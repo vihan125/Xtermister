@@ -31,6 +31,8 @@ class _AddPatientState extends State<AddPatient> {
 
   List<String> _methods = ['LMP','CD','US','EDC','Born'];
 
+  final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState> ();
+
   String getDate (DateTime d){
 
     if((d.month<10) && (d.day<10)){
@@ -85,9 +87,18 @@ class _AddPatientState extends State<AddPatient> {
         ));
   }
 
+  _showSnackBar(){
+    final snackBar = new SnackBar(
+        content:new Text("New Patient Created successfully"),
+        duration: Duration(seconds: 3),);
+
+    _scaffoldkey.currentState.showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         leading: Builder(
             builder: (BuildContext context){
@@ -100,9 +111,10 @@ class _AddPatientState extends State<AddPatient> {
               );
             }
         ),
+        elevation: 0,
         title: Text("New Patient"),
         centerTitle: true,
-        backgroundColor: Colors.cyan[300],
+        backgroundColor: Colors.cyan[200],
       ),
 
       body: Container(
@@ -431,10 +443,6 @@ class _AddPatientState extends State<AddPatient> {
                         await db
                             .execute(
                             'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod,calDate,dueDate) values ("$firstName","$lastName","$pNumber","$sNumber", "$difference", "$method","$date","$dueDate")');
-
-                        SnackBar(
-                          content: Text("Patient added successfully !"),
-                        );
                             Navigator.pushReplacementNamed(context, '/');
                         },
                       shape: RoundedRectangleBorder(

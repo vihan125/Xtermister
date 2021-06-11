@@ -174,7 +174,7 @@ class _CalenderState extends State<Calender> with AutomaticKeepAliveClientMixin 
                               child: ListTile(
                                 onTap: () {
                                   Navigator.pushNamed(context, "/details",
-                                      arguments: {'Patient': _selectedEvents[index]});
+                                      arguments: {'Patient': _selectedEvents[index], 'changed':false});
                                 },
                                 title: Text(
                                     _selectedEvents[index].firstName + " " +

@@ -38,6 +38,18 @@ class DBHelper {
         'dueDate TEXT)');
 
     await db
+        .execute('CREATE TABLE IF NOT EXISTS doctors ('
+        'id INTEGER PRIMARY KEY AUTOINCREMENT ,'
+        'fName TEXT NOT NULL,'
+        'lName TEXT,'
+        'email TEXT NOT NULL,'
+        'mobileNo TEXT,'
+        'vHospitals TEXT,'
+        'password TEXT,'
+        'token TEXT NOT NULL,'
+        'serverId INTEGER)');
+
+    await db
         .execute(
         'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Selena","Gomez","0771212121","0112121212", "266", "LMP")');
 

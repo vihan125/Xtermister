@@ -67,12 +67,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
               );
             }
         ),
+        elevation: 0,
         title: Text("Patients",
           style: TextStyle(
             fontSize: 20.0,
           ),),
         centerTitle: true,
-        backgroundColor: Colors.cyan[300],
+        backgroundColor: Colors.cyan[200],
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -185,14 +186,19 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
                             onPressed: (int i) {
                               setState(() {
                                 if ((i == 0) && (!isSelected[i])) {
-                                  patients.sort((a, b) =>
-                                      a.embryoAge.compareTo(b.embryoAge));
-                                  isSelected[i] = !isSelected[i];
+                                  if ((!isSelected[1]) && (!isSelected[2]) && (!isSelected[3]) && (!isSelected[4]) && (!isSelected[5])) {
+                                    patients.sort((a, b) =>
+                                        a.embryoAge.compareTo(b.embryoAge));
+                                    isSelected[i] = !isSelected[i];
+                                  }
                                 }
                                 else if ((i == 0) && (isSelected[i])) {
-                                  patients.sort((a, b) =>
-                                      b.embryoAge.compareTo(a.embryoAge));
-                                  isSelected[i] = !isSelected[i];
+                                  if ((!isSelected[1]) && (!isSelected[2]) && (!isSelected[3]) && (!isSelected[4]) && (!isSelected[5])){
+                                    patients.sort((a, b) =>
+                                        b.embryoAge.compareTo(a.embryoAge));
+                                    isSelected[i] = !isSelected[i];
+                                  }
+
                                 }
 
                                 else if ((i == 1) && (!isSelected[i])) {
@@ -317,8 +323,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
                       onDismissed: (direction) async {
                         var id = patients[index].id;
                         Database db = await DBHelper.instance.db;
-                        await db
-                            .execute('DELETE FROM mothers where id = "$id"');
+                        await db.execute('DELETE FROM mothers where id = "$id"');
+                        Mothers.removeAt(index);
                       },
                       background: Container(color: Colors.red),
                       confirmDismiss: (DismissDirection direction) async {
@@ -355,7 +361,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
                           child: ListTile(
                             onTap: () {
                               Navigator.pushNamed(context, "/details",
-                                  arguments: {'Patient': patients[index]});
+                                  arguments: {'Patient': patients[index],'changed':false});
                             },
                             title: Text(
                                 patients[index].firstName + " " +
