@@ -58,7 +58,7 @@ class PatientSearch extends SearchDelegate <String>{
                     onTap: () {
                       close(context, null);
                       Navigator.pushNamed(context, "/details",
-                          arguments: {'Patient': suggestionList[index], 'changed':false});
+                          arguments: {'Patient': suggestionList[index], 'changed':false, 'message':""});
                     },
                     title:Text(
                         suggestionList[index].firstName + " " +

@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:xth_trimester/dataBase/db_helper.dart';
 
 
+
 class AddPatient extends StatefulWidget {
 
   @override
@@ -31,7 +32,6 @@ class _AddPatientState extends State<AddPatient> {
 
   List<String> _methods = ['LMP','CD','US','EDC','Born'];
 
-  final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState> ();
 
   String getDate (DateTime d){
 
@@ -87,18 +87,10 @@ class _AddPatientState extends State<AddPatient> {
         ));
   }
 
-  _showSnackBar(){
-    final snackBar = new SnackBar(
-        content:new Text("New Patient Created successfully"),
-        duration: Duration(seconds: 3),);
-
-    _scaffoldkey.currentState.showSnackBar(snackBar);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldkey,
       appBar: AppBar(
         leading: Builder(
             builder: (BuildContext context){
@@ -442,8 +434,8 @@ class _AddPatientState extends State<AddPatient> {
                         Database db = await DBHelper.instance.db;
                         await db
                             .execute(
-                            'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod,calDate,dueDate) values ("$firstName","$lastName","$pNumber","$sNumber", "$difference", "$method","$date","$dueDate")');
-                            Navigator.pushReplacementNamed(context, '/');
+                            'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod,calDate,dueDate,archived) values ("$firstName","$lastName","$pNumber","$sNumber", "$difference", "$method","$date","$dueDate","0")');
+                        Navigator.pushReplacementNamed(context, '/',arguments: {'message':"Patient Created Successfully"});
                         },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)

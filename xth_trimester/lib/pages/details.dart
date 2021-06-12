@@ -6,6 +6,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:xth_trimester/dataBase/db_helper.dart';
 //import 'patient.dart';
 import 'package:xth_trimester/dataBase/patient_model.dart';
+import 'package:xth_trimester/pages/patient.dart';
+import 'package:xth_trimester/pages/show_aleart.dart';
 
 
 class Details extends StatefulWidget {
@@ -17,11 +19,57 @@ class _DetailsState extends State<Details> {
 
   Map data = {};
   bool isEnabled =  false;
-  InputDecoration decoration = InputDecoration(border: InputBorder.none);
+  InputDecoration decorationEdit = InputDecoration(fillColor: Colors.white,
+                                    filled: true,
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0))
+  );
+
+  InputDecoration decorationShow = InputDecoration(border: InputBorder.none);
+
   List<String> _methods = ['LMP','CD','US','EDC','Born'];
   DateTime _chosenDateTime;
   Mother p;
+  String msg;
+  InputDecoration decoration;
+  bool noteEnable = false;
 
+  String fName;
+  String lName;
+  String pNo;
+  String sNo;
+  String note;
+
+  TextEditingController firstNameCtrl;
+  TextEditingController lastNameCtrl;
+  TextEditingController pNoCtrl;
+  TextEditingController sNoCtrl;
+  TextEditingController notesCtrl;
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameCtrl = TextEditingController();
+
+    lastNameCtrl = TextEditingController();
+
+    pNoCtrl = TextEditingController();
+
+    sNoCtrl = TextEditingController();
+
+    notesCtrl = TextEditingController();
+
+  }
+
+  void dispose(){
+    super.dispose();
+    firstNameCtrl.dispose();
+    lastNameCtrl.dispose();
+    pNoCtrl.dispose();
+    sNoCtrl.dispose();
+    notesCtrl.dispose();
+  }
   var backBtn_1 =  Builder(
       builder: (BuildContext context){
       return IconButton(
@@ -48,6 +96,7 @@ class _DetailsState extends State<Details> {
 
   var backBtn;
   bool changed;
+
 
   void setBack (){
     if(changed){
@@ -89,9 +138,8 @@ class _DetailsState extends State<Details> {
                     initialDateTime: DateTime.parse(p.calDate) ,
                     mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (val){
-                      setState(() {
                         _chosenDateTime = val;
-                      });
+
                     }),
               ),
 
@@ -114,19 +162,107 @@ class _DetailsState extends State<Details> {
                   Mother m = Mother.fromMap(mom[0]);
                   Navigator.of(ctx).pop();
                   Navigator.pushReplacementNamed(context, "/details",
-                      arguments: {'Patient': m , 'changed':true});
+                      arguments: {'Patient': m , 'changed':true, 'message':"Patient updated Successfully"});
                 },
               )
             ],
           ),
         ));
   }
+
+  void setEdit (Mother p)async{
+    if (isEnabled){
+      int id = p.id;
+      Database db = await DBHelper.instance.db;
+      if(fName != null){
+        if(fName != ""){
+          await db.execute('UPDATE mothers SET firstName = "$fName" WHERE id = $id');
+          setState(() {
+            p.firstName = fName;
+          });
+        }else{
+          showError(context, "Name field cannot be empty");
+        }
+
+      }
+
+      if (lName != null){
+        await db.execute('UPDATE mothers SET lastName = "$lName" WHERE id = $id');
+        setState(() {
+          p.lastName = lName;
+        });
+      }
+
+      if (pNo != null){
+        if(pNo != ""){
+          await db.execute('UPDATE mothers SET pNumber = "$pNo" WHERE id = $id');
+          setState(() {
+            p.pNumber = pNo;
+          });
+        }else{
+          showError(context, "Primary Contact cannot be empty");
+
+        }
+      }
+
+      if (sNo != null){
+        await db.execute('UPDATE mothers SET sNumber  = "$sNo" WHERE id = $id');
+        setState(() {
+          p.sNumber = sNo;
+        });
+      }
+
+      setState(() {
+          isEnabled = false;
+        });
+
+    }else{
+      setState(() {
+        isEnabled = true;
+      });
+    }
+  }
+
+  void setDeco (){
+    if (isEnabled){
+        decoration = decorationEdit;
+    }else{
+        decoration = decorationShow;
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
     p = data['Patient'];
     changed = data['changed'];
+    msg = data['message'];
+    if((msg != "") && (msg != null)){
+      showSuccess(context, msg);
+    }
+    if ((fName ==null) && (lName == null) && (pNo == null) && (sNo == null) && (note == null)){
+      fName = p.firstName;
+      lName = p.lastName;
+      pNo = p.pNumber;
+      sNo = p.sNumber;
+
+      firstNameCtrl.text = fName;
+
+      lastNameCtrl.text = lName;
+
+      pNoCtrl.text = pNo;
+
+      sNoCtrl.text = sNo;
+
+      if (p.notes != null ){
+        note = p.notes;
+        notesCtrl.text = note;
+      }
+    }
     setBack();
+    setDeco();
 
     return DefaultTabController(
       length: 2,
@@ -141,7 +277,7 @@ class _DetailsState extends State<Details> {
             IconButton(
               icon: Icon(Icons.edit),
               onPressed:(){
-
+                  setEdit(p);
               } ,
               color: Colors.white,),
           ],
@@ -184,16 +320,25 @@ class _DetailsState extends State<Details> {
                            SizedBox(height: 8,),
 
                            SizedBox(
-                             height: 25,
+                             height: 30,
+                             width: ((MediaQuery.of(context).size.width)/2)-10,
                              child: TextField(
                                 style: TextStyle(
                                   fontSize:20,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                 controller: TextEditingController(text:p.firstName),
+                                 controller: firstNameCtrl,
+                                 autofocus: true,
                                  enabled: isEnabled,
                                   decoration: decoration,
+                               onChanged: (fN) async {
+                                  if(fN != "") {
+                                    fName = fN;
+                                    firstNameCtrl.text = fName;
+                                    firstNameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: firstNameCtrl.text.length));
+                                  }
+                               },
                                ),
                            ),
 
@@ -205,16 +350,22 @@ class _DetailsState extends State<Details> {
                              ),),
                            SizedBox(height: 8,),
                            SizedBox(
-                             height: 25,
+                             height: 30,
+                             width: ((MediaQuery.of(context).size.width)/2)-10,
                              child: TextField(
                                style: TextStyle(
                                  fontSize:20,
                                  color: Colors.black,
                                  fontWeight: FontWeight.bold,
                                ),
-                               controller: TextEditingController(text:p.lastName),
+                               controller: lastNameCtrl,
                                enabled: isEnabled,
                                decoration: decoration,
+                               onChanged: (lN) async {
+                                 lName = lN;
+                                 lastNameCtrl.text = lName;
+                                 lastNameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: lastNameCtrl.text.length));
+                               },
                              ),
                            ),
 
@@ -239,17 +390,24 @@ class _DetailsState extends State<Details> {
                               ),),
                             SizedBox(height: 8,),
                             SizedBox(
-                              height: 25,
-                              width: 130,
+                              height: 30,
+                              width: ((MediaQuery.of(context).size.width)/2)-30,
                               child: TextField(
                                 style: TextStyle(
                                   fontSize:20,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                controller: TextEditingController(text:p.pNumber),
+                                controller: pNoCtrl,
                                 enabled: isEnabled,
                                 decoration: decoration,
+                                onChanged: (pN) async {
+                                  if(pN != "") {
+                                    pNo = pN;
+                                    pNoCtrl.text = pNo;
+                                    pNoCtrl.selection = TextSelection.fromPosition(TextPosition(offset: pNoCtrl.text.length));
+                                  }
+                                },
                               ),
                             ),
                           ],
@@ -268,17 +426,22 @@ class _DetailsState extends State<Details> {
                               ),),
                             SizedBox(height: 8,),
                             SizedBox(
-                              height: 25,
-                              width: 130,
+                              height: 30,
+                              width: ((MediaQuery.of(context).size.width)/2)-30,
                               child: TextField(
                                 style: TextStyle(
                                   fontSize:20,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                controller: TextEditingController(text:p.sNumber),
+                                controller: sNoCtrl,
                                 enabled: isEnabled,
                                 decoration: decoration,
+                                onChanged: (sN) async {
+                                  sNo=sN;
+                                  sNoCtrl.text = sNo;
+                                  sNoCtrl.selection = TextSelection.fromPosition(TextPosition(offset: sNoCtrl.text.length));
+                                },
                               ),
                             ),
                           ],
@@ -296,7 +459,15 @@ class _DetailsState extends State<Details> {
                       child: RaisedButton(
                         color: Colors.blue,
                         textColor: Colors.white,
-                        onPressed: (){},
+                        onPressed: ()async{
+                          int id = p.id;
+                          Database db = await DBHelper.instance.db;
+                          await db.execute('UPDATE mothers SET archived = "1",embryoAge = "-1" WHERE id = $id');
+                          var mom = await db.rawQuery('select * from mothers where id = $id');
+                          Mother m = Mother.fromMap(mom[0]);
+                          Navigator.pushReplacementNamed(context, "/details",
+                              arguments: {'Patient': m , 'changed':true, 'message':"Patient archived successfully"});
+                        },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)
                         ),
@@ -496,7 +667,97 @@ class _DetailsState extends State<Details> {
                            ),
                          ),
 
-                       TextField(),
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.fromLTRB(20,10,20,10),
+                            height: 300,
+                            child: TextField(
+                              maxLines: 30,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)
+                                ),
+                                labelText: 'Add notes about patient',
+                                labelStyle: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.blueGrey,
+                                )
+                              ),
+                              style: TextStyle(
+                                fontSize:15,
+                                color: Colors.black,
+                              ),
+                              controller: notesCtrl,
+                              enabled: noteEnable,
+                              onChanged: (input)async {
+                                if (input != "") {
+                                  note = input;
+                                  notesCtrl.text = note;
+                                  notesCtrl.selection =
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset: notesCtrl.text.length));
+                                }
+
+                              }
+                            ),
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: RaisedButton(
+                                  color: Colors.cyan[200],
+                                  textColor: Colors.white,
+                                  onPressed: ()async{
+                                    setState(() {
+                                      noteEnable = true;
+                                    });
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)
+                                  ),
+                                  child: Text("Edit",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: RaisedButton(
+                                  color: Colors.cyan[200],
+                                  textColor: Colors.white,
+                                  onPressed: ()async{
+                                    int id = p.id;
+                                    Database db = await DBHelper.instance.db;
+                                    await db.execute('UPDATE mothers SET notes = "$note" WHERE id = $id');
+                                    showSuccess(context, "Note saved successfully");
+
+                                    setState(() {
+                                      noteEnable = false;
+                                      p.notes = note;
+                                    });
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)
+                                  ),
+                                  child: Text("Save",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
 
                      ],
                    ),

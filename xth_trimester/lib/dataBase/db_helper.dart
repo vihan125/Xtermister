@@ -35,7 +35,9 @@ class DBHelper {
         'embryoAge INTEGER(4) NOT NULL,'
         'calMethod TEXT,'
         'calDate TEXT,'
-        'dueDate TEXT)');
+        'dueDate TEXT,'
+        'archived INTEGER(1),'
+        'notes TEXT)');
 
     await db
         .execute('CREATE TABLE IF NOT EXISTS doctors ('

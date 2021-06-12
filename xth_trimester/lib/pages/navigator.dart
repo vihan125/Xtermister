@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xth_trimester/pages/calculator.dart';
 import 'package:xth_trimester/pages/calender.dart';
 import 'package:xth_trimester/pages/home.dart';
+import 'package:xth_trimester/pages/show_aleart.dart';
 
 class MyNavigator extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class MyNavigator extends StatefulWidget {
 
 class _MyNavigatorState extends State<MyNavigator> {
 
-
+  Map data = {};
   int _selectedIndex = 0;
   PageController _pageController = PageController();
   List<Widget> _screens = [Home(),Calender(),Calculator(),];
@@ -23,8 +24,15 @@ class _MyNavigatorState extends State<MyNavigator> {
   void _onItemTapped(int selectedIndex){
     _pageController.jumpToPage(selectedIndex);
   }
+
+
   @override
   Widget build(BuildContext context) {
+    data = ModalRoute.of(context).settings.arguments;
+    if (data != null) {
+      String msg = data['message'];
+      showSuccess(context, msg);
+    }
     return Scaffold(
       body: PageView(
         controller: _pageController,

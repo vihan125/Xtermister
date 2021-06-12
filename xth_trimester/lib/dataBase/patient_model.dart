@@ -10,9 +10,11 @@ class Mother {
   String calDate;
   String ageWeeks;
   String dueDate;
+  int archived;
+  String notes;
 
   Mother(this.id, this.firstName, this.lastName, this.embryoAge, this.calMethod,
-      this.pNumber, this.sNumber);
+      this.pNumber, this.sNumber, this.notes);
 
 
   Map<String, dynamic> toMap() {
@@ -26,6 +28,8 @@ class Mother {
       'calMethod': calMethod,
       'cal_time' : calDate,
       'dueDate' : dueDate,
+      'archived': archived,
+      'notes' : notes,
     };
     return map;
   }
@@ -58,11 +62,26 @@ class Mother {
     calMethod = map['calMethod'];
     calDate = map['calDate'];
     dueDate = map['dueDate'];
+    archived = map['archived'];
+    notes = map['notes'];
 
 
     setIcon();
-    this.ageWeeks = (embryoAge ~/ 7).toString() + "W " + (embryoAge % 7).toString() + "d";
+    if(this.sNumber == null){
+      this.sNumber = "";
+    }
+    if(this.lastName == null){
+      this.lastName = "";
+    }
+    if(this.embryoAge > 0){
+      this.ageWeeks = (embryoAge ~/ 7).toString() + "W " + (embryoAge % 7).toString() + "d";
+    }else{
+      this.ageWeeks = "Baby Born" ;
+    }
 
+    if (this.archived == null){
+      this.archived = 0;
+    }
     if (this.calDate == null) {
       DateTime d = DateTime.now();
       if((d.month<10) && (d.day<10)){
