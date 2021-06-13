@@ -434,8 +434,8 @@ class _AddPatientState extends State<AddPatient> {
                         Database db = await DBHelper.instance.db;
                         await db
                             .execute(
-                            'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod,calDate,dueDate,archived) values ("$firstName","$lastName","$pNumber","$sNumber", "$difference", "$method","$date","$dueDate","0")');
-                        Navigator.pushReplacementNamed(context, '/',arguments: {'message':"Patient Created Successfully"});
+                            'insert into mothers (firstName,lastName,pNumber,sNumber,calMethod,calDate,dueDate,archived) values ("$firstName","$lastName","$pNumber","$sNumber", "$method","$date","$dueDate","0")');
+                        Navigator.pushReplacementNamed(context, '/');
                         },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)

@@ -32,7 +32,6 @@ class DBHelper {
         'lastName TEXT,'
         'pNumber TEXT NOT NULL,'
         'sNumber TEXT,'
-        'embryoAge INTEGER(4) NOT NULL,'
         'calMethod TEXT,'
         'calDate TEXT,'
         'dueDate TEXT,'
@@ -53,19 +52,19 @@ class DBHelper {
 
     await db
         .execute(
-        'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Selena","Gomez","0771212121","0112121212", "266", "LMP")');
+        'insert into mothers (firstName,lastName,pNumber,sNumber,calMethod) values ("Patient","1","0771212121","0112121212", "LMP")');
 
     await db
         .execute(
-        'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Taylor","Swift","0771212121","0112121212", "70", "LMP")');
+        'insert into mothers (firstName,lastName,pNumber,sNumber,calMethod) values ("Patient","2","0771212121","0112121212", "LMP")');
 
     await db
         .execute(
-        'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Anne","Marrie","0771212121","0112121212", "150", "LMP")');
+        'insert into mothers (firstName,lastName,pNumber,sNumber,calMethod) values ("Patient","3","0771212121","0112121212", "LMP")');
 
     await db
         .execute(
-        'insert into mothers (firstName,lastName,pNumber,sNumber,embryoAge,calMethod) values ("Latha","Walpola","0771212121","0112121212", "200", "LMP")');
+        'insert into mothers (firstName,lastName,pNumber,sNumber,calMethod) values ("Patient","4","0771212121","0112121212", "LMP")');
   }
 }
 

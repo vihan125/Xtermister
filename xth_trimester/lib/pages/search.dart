@@ -34,7 +34,7 @@ class PatientSearch extends SearchDelegate <String>{
         ? m
         : m.where((mom) =>
         ((mom.firstName).toLowerCase() + " " + (mom.lastName).toLowerCase())
-            .startsWith((query).toLowerCase())).toList();
+            .contains((query).toLowerCase())).toList();
     if (suggestionList.length == 0) {
       return Center(
           child: Padding(
@@ -80,37 +80,81 @@ class PatientSearch extends SearchDelegate <String>{
   Widget buildSuggestions(BuildContext context) {
     final suggestionList = query.isEmpty
         ? m
-        : m.where((mom)=> ((mom.firstName).toLowerCase() +" "+(mom.lastName).toLowerCase()).startsWith((query).toLowerCase())).toList();
+        : m.where((mom)=> ((mom.firstName).toLowerCase() +" "+(mom.lastName).toLowerCase()).contains((query).toLowerCase())).toList();
+
+
     return ListView.builder(
         itemCount: suggestionList.length,
         itemBuilder: (context,index){
-      return Card(
-        child: ListTile(
-          onTap: () {
-            close(context, null);
-            Navigator.pushNamed(context, "/details",
-                arguments: {'Patient': suggestionList[index],'changed':false, 'message':""});
-          },
-          title:RichText(
-            text:TextSpan(
-              text:(suggestionList[index].firstName + " " + suggestionList[index].lastName).substring(0,query.length),
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold
-            ),
-            children: [TextSpan(
-                text: (suggestionList[index].firstName + " " + suggestionList[index].lastName).substring(query.length),
-              style: TextStyle(color: Colors.grey)
-            )]),
-          ),
-          subtitle: Text(suggestionList[index].ageWeeks),
-          leading: ClipRRect(
-            borderRadius: BorderRadius.all(
-                Radius.circular(8.0)),
-            child: Image.asset(suggestionList[index].icon),
-          ),
-        ),
-      );
+          int start = (suggestionList[index].firstName + " " + suggestionList[index].lastName).indexOf(query);
+          int end = start+query.length;
+          if(start == -1){
+            return Card(
+              child: ListTile(
+                onTap: () {
+                  close(context, null);
+                  Navigator.pushNamed(context, "/details",
+                      arguments: {'Patient': suggestionList[index],'changed':false, 'message':""});
+                },
+                title:RichText(
+                  text:TextSpan(
+                      text:(suggestionList[index].firstName + " " + suggestionList[index].lastName).substring(0,query.length),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                      ),
+                      children: [TextSpan(
+                          text: (suggestionList[index].firstName + " " + suggestionList[index].lastName).substring(query.length),
+                          style: TextStyle(color: Colors.grey)
+                      )]),
+                ),
+                subtitle: Text(suggestionList[index].ageWeeks),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(8.0)),
+                  child: Image.asset(suggestionList[index].icon),
+                ),
+              ),
+            );
+          }else{
+            return Card(
+              child: ListTile(
+                onTap: () {
+                  close(context, null);
+                  Navigator.pushNamed(context, "/details",
+                      arguments: {'Patient': suggestionList[index],'changed':false, 'message':""});
+                },
+                title:RichText(
+                  text:TextSpan(
+                      text:(suggestionList[index].firstName + " " + suggestionList[index].lastName).substring(0,start),
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold
+                      ),
+                      children: [
+
+                        TextSpan(
+                          text: (suggestionList[index].firstName + " " + suggestionList[index].lastName).substring(start,end),
+                          style: TextStyle(color: Colors.black)
+                      ),
+
+                        TextSpan(
+                            text: (suggestionList[index].firstName + " " + suggestionList[index].lastName).substring(end,),
+                            style: TextStyle(color: Colors.grey)
+                        )
+
+                      ]),
+                ),
+                subtitle: Text(suggestionList[index].ageWeeks),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(8.0)),
+                  child: Image.asset(suggestionList[index].icon),
+                ),
+              ),
+            );
+          }
+
     });
   }
 

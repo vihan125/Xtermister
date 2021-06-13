@@ -44,7 +44,7 @@ class _DetailsState extends State<Details> {
   TextEditingController sNoCtrl;
   TextEditingController notesCtrl;
 
-
+  int showed = 0 ;
 
   @override
   void initState() {
@@ -86,6 +86,7 @@ class _DetailsState extends State<Details> {
         return IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: (){
+            Navigator.pop(context);
             Navigator.pushReplacementNamed(context,'/');
           },
           color: Colors.white,
@@ -148,14 +149,13 @@ class _DetailsState extends State<Details> {
                 onPressed: () async {
                   DateTime today = DateTime.now();
                   DateTime pickedDate = _chosenDateTime;
-                  int difference = (today.difference(pickedDate).inHours/24).round();
                   DateTime dueDate = pickedDate.add(Duration(days:280));
                   int id = p.id;
                   String date = getDate(_chosenDateTime);
                   String due = getDate(dueDate);
 
                   Database db = await DBHelper.instance.db;
-                  await db.execute('UPDATE mothers SET calDate = "$date",embryoAge = "$difference",dueDate="$due" WHERE id = $id');
+                  await db.execute('UPDATE mothers SET calDate = "$date",dueDate="$due" WHERE id = $id');
 
                   var mom = await db.rawQuery('select * from mothers where id = $id');
                   Mother m = Mother.fromMap(mom[0]);
@@ -238,8 +238,9 @@ class _DetailsState extends State<Details> {
     p = data['Patient'];
     changed = data['changed'];
     msg = data['message'];
-    if((msg != "") && (msg != null)){
+    if((msg != "") && (msg != null) && (showed == 0)){
       showSuccess(context, msg);
+      showed = 1;
     }
     if ((fName ==null) && (lName == null) && (pNo == null) && (sNo == null) && (note == null)){
       fName = p.firstName;
@@ -314,6 +315,7 @@ class _DetailsState extends State<Details> {
                              style: TextStyle(
                                color: Colors.grey[800],
                                fontSize: 15,
+                               letterSpacing: 1,
                              ),),
 
                            SizedBox(height: 8,),
@@ -323,6 +325,7 @@ class _DetailsState extends State<Details> {
                              width: ((MediaQuery.of(context).size.width)/2)-10,
                              child: TextField(
                                 style: TextStyle(
+                                  letterSpacing: 1,
                                   fontSize:20,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -341,13 +344,14 @@ class _DetailsState extends State<Details> {
                                ),
                            ),
 
-                           SizedBox(height: 10,),
+                           SizedBox(height: 12,),
                            Text("Last name",
                              style: TextStyle(
                                color: Colors.grey[800],
                                fontSize: 15,
+                               letterSpacing: 1,
                              ),),
-                           SizedBox(height: 8,),
+                           SizedBox(height: 9,),
                            SizedBox(
                              height: 30,
                              width: ((MediaQuery.of(context).size.width)/2)-10,
@@ -356,6 +360,7 @@ class _DetailsState extends State<Details> {
                                  fontSize:20,
                                  color: Colors.black,
                                  fontWeight: FontWeight.bold,
+                                 letterSpacing: 1,
                                ),
                                controller: lastNameCtrl,
                                enabled: isEnabled,
@@ -386,6 +391,7 @@ class _DetailsState extends State<Details> {
                               style: TextStyle(
                                 color: Colors.grey[800],
                                 fontSize: 15,
+                                letterSpacing: 1,
                               ),),
                             SizedBox(height: 8,),
                             SizedBox(
@@ -396,6 +402,7 @@ class _DetailsState extends State<Details> {
                                   fontSize:20,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
                                 ),
                                 controller: pNoCtrl,
                                 enabled: isEnabled,
@@ -422,6 +429,7 @@ class _DetailsState extends State<Details> {
                               style: TextStyle(
                                 color: Colors.grey[800],
                                 fontSize: 15,
+                                letterSpacing: 1,
                               ),),
                             SizedBox(height: 8,),
                             SizedBox(
@@ -432,6 +440,7 @@ class _DetailsState extends State<Details> {
                                   fontSize:20,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
                                 ),
                                 controller: sNoCtrl,
                                 enabled: isEnabled,
@@ -461,7 +470,7 @@ class _DetailsState extends State<Details> {
                         onPressed: ()async{
                           int id = p.id;
                           Database db = await DBHelper.instance.db;
-                          await db.execute('UPDATE mothers SET archived = "1",embryoAge = "-1" WHERE id = $id');
+                          await db.execute('UPDATE mothers SET archived = "1" WHERE id = $id');
                           var mom = await db.rawQuery('select * from mothers where id = $id');
                           Mother m = Mother.fromMap(mom[0]);
                           Navigator.pushReplacementNamed(context, "/details",
@@ -474,6 +483,7 @@ class _DetailsState extends State<Details> {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
                         ),),
                       ),
                     ),
@@ -541,7 +551,8 @@ class _DetailsState extends State<Details> {
                                      padding: EdgeInsets.fromLTRB(0,15,0,0),
                                      child: Text("Method",
                                        style: TextStyle(fontSize: 15.0,
-                                           color: Colors.grey[800]),),
+                                            color: Colors.grey[800],
+                                            letterSpacing: 1,),),
                                    )),
                                    Theme(
                                      data: Theme.of(context).copyWith(
@@ -565,6 +576,7 @@ class _DetailsState extends State<Details> {
                                          underline: SizedBox(),
                                          style: TextStyle(color: Colors.white,
                                            fontWeight: FontWeight.bold,
+                                           letterSpacing: 1,
                                            fontSize: 20,),
 
                                          onChanged: (newValue) async {
@@ -594,6 +606,7 @@ class _DetailsState extends State<Details> {
                                      padding: EdgeInsets.fromLTRB(0,25,0,0),
                                      child: Text("Date",
                                        style: TextStyle(fontSize: 15.0,
+                                           letterSpacing: 1,
                                            color: Colors.grey[800]),),
                                    )),
 
@@ -629,6 +642,7 @@ class _DetailsState extends State<Details> {
                                      padding: EdgeInsets.fromLTRB(0,10,0,0),
                                      child: Text("Embryo Age",
                                        style: TextStyle(fontSize: 15.0,
+                                           letterSpacing: 1,
                                            color: Colors.grey[800]),),
                                    )),
                                    Padding(
@@ -649,6 +663,7 @@ class _DetailsState extends State<Details> {
                                      padding: EdgeInsets.fromLTRB(0,30,0,0),
                                      child: Text("Estimated Due Date",
                                        style: TextStyle(fontSize: 15.0,
+                                           letterSpacing: 1,
                                            color: Colors.grey[800]),),
                                    )),
                                    Padding(
@@ -656,6 +671,7 @@ class _DetailsState extends State<Details> {
                                      child: Text(p.dueDate,
                                        style: TextStyle(
                                            fontSize: 20,
+                                           letterSpacing: 1,
                                            fontWeight: FontWeight.bold
                                        ),),
                                    ),
@@ -683,6 +699,7 @@ class _DetailsState extends State<Details> {
                                 labelStyle: TextStyle(
                                   fontSize: 20,
                                   color: Colors.blueGrey,
+                                  letterSpacing: 1,
                                 )
                               ),
                               style: TextStyle(
@@ -723,6 +740,7 @@ class _DetailsState extends State<Details> {
                                   child: Text("Save",
                                     style: TextStyle(
                                       fontSize: 15,
+                                      letterSpacing: 1,
                                       fontWeight: FontWeight.bold,
                                     ),),
                                 ),

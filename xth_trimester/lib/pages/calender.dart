@@ -15,6 +15,9 @@ class _CalenderState extends State<Calender> with AutomaticKeepAliveClientMixin 
   CalendarController _controller;
   Map<DateTime, List<dynamic>> _events={};
   Map<DateTime, List<dynamic>> _getevents={};
+  Map<DateTime, List<dynamic>> _holidays={};
+  Map<DateTime, List<dynamic>> _dueDays={};
+
   List<dynamic> _selectedEvents = [];
   int length = -1;
 
@@ -34,14 +37,57 @@ class _CalenderState extends State<Calender> with AutomaticKeepAliveClientMixin 
       for (int i =0; i< length; i++){
         Mother m = Mother.fromMap(mothers[i]);
         DateTime d = DateTime.parse(m.dueDate);
+        DateTime r1 = d.add(Duration(days: 3));
+        DateTime r2 = d.add(Duration(days: 2));
+        DateTime r3 = d.add(Duration(days: 1));
+        DateTime r4 = d.subtract(Duration(days: 1));
+        DateTime r5 = d.subtract(Duration(days: 2));
+        DateTime r6 = d.subtract(Duration(days: 3));
         if (_getevents[d] != null){
           _getevents[d].add(m);
         }else{
           _getevents[d] = [m];
         }
+
+        if (_holidays[r1] != null){
+          _holidays[r1].add(m.firstName + "" + m.lastName);
+        }else{
+          _holidays[r1] = [m.firstName + "" + m.lastName];
+        }
+
+        if (_holidays[r2] != null){
+          _holidays[r2].add(m.firstName + "" + m.lastName);
+        }else{
+          _holidays[r2] = [m.firstName + "" + m.lastName];
+        }
+
+        if (_holidays[r3] != null){
+          _holidays[r3].add(m.firstName + "" + m.lastName);
+        }else{
+          _holidays[r3] = [m.firstName + "" + m.lastName];
+        }
+
+        if (_holidays[r4] != null){
+          _holidays[r4].add(m.firstName + "" + m.lastName);
+        }else{
+          _holidays[r4] = [m.firstName + "" + m.lastName];
+        }
+
+        if (_holidays[r5] != null){
+          _holidays[r5].add(m.firstName + "" + m.lastName);
+        }else{
+          _holidays[r5] = [m.firstName + "" + m.lastName];
+        }
+
+        if (_holidays[r6] != null){
+          _holidays[r6].add(m.firstName + "" + m.lastName);
+        }else{
+          _holidays[r6] = [m.firstName + "" + m.lastName];
+        }
       }
       setState(() {
        _events = _getevents;
+       _dueDays = _holidays;
       });
     }
   }
@@ -76,6 +122,7 @@ class _CalenderState extends State<Calender> with AutomaticKeepAliveClientMixin 
 
                     TableCalendar(
                       events: _events,
+                      holidays: _dueDays,
                       initialCalendarFormat: CalendarFormat.month,
                       calendarStyle: CalendarStyle(
                           canEventMarkersOverflow: true,
@@ -150,6 +197,16 @@ class _CalenderState extends State<Calender> with AutomaticKeepAliveClientMixin 
                               }
                               return children;
                             },
+                        holidayDayBuilder: (context,date,holidays)=> Container(
+                            margin: const EdgeInsets.all(4.0),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.redAccent[100],
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Text(
+                              date.day.toString(),
+                              style: TextStyle(color: Colors.white),
+                            )),
                       ),
                       calendarController: _controller,
                       onDaySelected: (day,events){

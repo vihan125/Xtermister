@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:xth_trimester/pages/show_aleart.dart';
 
 class Calculator extends StatefulWidget {
   @override
@@ -169,27 +170,31 @@ class _CalculatorState extends State<Calculator> with AutomaticKeepAliveClientMi
                   DateTime dueDate;
                   String expDue;
                   String age;
-                  if(method == "LMP"){
-                    dueDate = day.add(Duration(days:280));
-                     expDue = dueDate.day.toString()+" "+getMonth(dueDate.month)+" "+dueDate.year.toString();
-                     age = (ageDiff ~/ 7).toString() + "W " + (ageDiff % 7).toString() + "d";
+                  if(ageDiff<0){
+                    showError(context, "Future day is selected !");
+                    expDue = "Not a valid input";
+                    age = "";
                   }
-                  else if (method == "CD"){
-
-                    expDue = "Not Yet Implemented";
-                    age = "Not Yet Implemented";
-
-                  }else if (method == "US"){
-
-                    expDue = "Not Yet Implemented";
-                    age = "Not Yet Implemented";
-
-                  }else if (method == "EDC"){
-
-                    expDue = "Not Yet Implemented";
-                    age = "Not Yet Implemented";
+                  else {
+                      if (method == "LMP") {
+                        dueDate = day.add(Duration(days: 280));
+                        expDue = dueDate.day.toString() + " " +
+                            getMonth(dueDate.month) + " " +
+                            dueDate.year.toString();
+                        age = (ageDiff ~/ 7).toString() + "W " +
+                            (ageDiff % 7).toString() + "d";
+                      }
+                      else if (method == "CD") {
+                        expDue = "Not Yet Implemented";
+                        age = "Not Yet Implemented";
+                      } else if (method == "US") {
+                        expDue = "Not Yet Implemented";
+                        age = "Not Yet Implemented";
+                      } else if (method == "EDC") {
+                        expDue = "Not Yet Implemented";
+                        age = "Not Yet Implemented";
+                      }
                   }
-
                   setState(() {
                     dueD = expDue;
                     embAge = age;

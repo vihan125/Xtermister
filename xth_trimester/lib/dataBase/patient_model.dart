@@ -65,7 +65,28 @@ class Mother {
     archived = map['archived'];
     notes = map['notes'];
 
+    if (this.calDate == null) {
+      DateTime d = DateTime.now();
+      if((d.month<10) && (d.day<10)){
+        this.calDate = d.year.toString()+"-0"+d.month.toString()+"-0"+d.day.toString();
+      }
+      else if ((d.month<10) && (d.day>=10)){
+        this.calDate = d.year.toString()+"-0"+d.month.toString()+"-"+d.day.toString();
+      }
+      else if ((d.month>=10) && (d.day<10)){
+        this.calDate= d.year.toString()+"-"+d.month.toString()+"-0"+d.day.toString();
+      }else {
+        this.calDate = d.year.toString() + "-" + d.month.toString() + "-" + d.day.toString();
+      }
+    }
 
+    DateTime today = DateTime.now();
+    DateTime pickedDate = DateTime.parse(this.calDate);
+    this.embryoAge = (today.difference(pickedDate).inHours/24).round();
+
+    if(this.archived == 1){
+      this.embryoAge = -1;
+    }
     setIcon();
     if(this.sNumber == null){
       this.sNumber = "";
@@ -81,20 +102,6 @@ class Mother {
 
     if (this.archived == null){
       this.archived = 0;
-    }
-    if (this.calDate == null) {
-      DateTime d = DateTime.now();
-      if((d.month<10) && (d.day<10)){
-        this.calDate = d.year.toString()+"-0"+d.month.toString()+"-0"+d.day.toString();
-      }
-      else if ((d.month<10) && (d.day>=10)){
-        this.calDate = d.year.toString()+"-0"+d.month.toString()+"-"+d.day.toString();
-      }
-      else if ((d.month>=10) && (d.day<10)){
-        this.calDate= d.year.toString()+"-"+d.month.toString()+"-0"+d.day.toString();
-      }else {
-        this.calDate = d.year.toString() + "-" + d.month.toString() + "-" + d.day.toString();
-      }
     }
 
     if (this.dueDate == null){
