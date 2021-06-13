@@ -88,8 +88,8 @@ class PatientSearch extends SearchDelegate <String>{
         child: ListTile(
           onTap: () {
             close(context, null);
-            Navigator.pushReplacementNamed(context, "/details",
-                arguments: {'Patient': suggestionList[index]});
+            Navigator.pushNamed(context, "/details",
+                arguments: {'Patient': suggestionList[index],'changed':false, 'message':""});
           },
           title:RichText(
             text:TextSpan(

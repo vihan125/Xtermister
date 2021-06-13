@@ -11,7 +11,7 @@ import 'pages/signup.dart';
 
 void main(){
 
-  bool loggedIn = false;
+  bool loggedIn = true;
 
   if(loggedIn) {
     runApp(MaterialApp(

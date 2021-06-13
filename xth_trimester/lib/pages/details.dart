@@ -31,7 +31,6 @@ class _DetailsState extends State<Details> {
   Mother p;
   String msg;
   InputDecoration decoration;
-  bool noteEnable = false;
 
   String fName;
   String lName;
@@ -691,7 +690,7 @@ class _DetailsState extends State<Details> {
                                 color: Colors.black,
                               ),
                               controller: notesCtrl,
-                              enabled: noteEnable,
+                              enabled: true,
                               onChanged: (input)async {
                                 if (input != "") {
                                   note = input;
@@ -705,30 +704,7 @@ class _DetailsState extends State<Details> {
                             ),
                           ),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: RaisedButton(
-                                  color: Colors.cyan[200],
-                                  textColor: Colors.white,
-                                  onPressed: ()async{
-                                    setState(() {
-                                      noteEnable = true;
-                                    });
-                                  },
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)
-                                  ),
-                                  child: Text("Edit",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),),
-                                ),
-                              ),
-                              Padding(
+                          Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: RaisedButton(
                                   color: Colors.cyan[200],
@@ -738,11 +714,8 @@ class _DetailsState extends State<Details> {
                                     Database db = await DBHelper.instance.db;
                                     await db.execute('UPDATE mothers SET notes = "$note" WHERE id = $id');
                                     showSuccess(context, "Note saved successfully");
+                                    p.notes = note;
 
-                                    setState(() {
-                                      noteEnable = false;
-                                      p.notes = note;
-                                    });
                                   },
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30)
@@ -754,8 +727,6 @@ class _DetailsState extends State<Details> {
                                     ),),
                                 ),
                               ),
-                            ],
-                          ),
                         ],
                       ),
 
