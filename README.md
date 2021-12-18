@@ -8,7 +8,7 @@ This project is Flutter App that was built to manage pregnent mothers for doctor
 To accomadate these three requiremnets navigation bar with three sections was used. Login page and the view of the application once logged in is shown in the below images,
 <p align="center">
   <image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/log%20in.jpeg width="300" height="600">
-                   
+  <br>                  
   <image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/list.png width="300" height = "600">
 </p>
 
