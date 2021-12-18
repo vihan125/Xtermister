@@ -6,7 +6,10 @@ This project is Flutter App that was built to manage pregnent mothers for doctor
 * Calculator that can claculate the expected due date when a date is given
 
 To accomadate these three requiremnets navigation bar with three sections was used. Login page and the view of the application once logged in is shown in the below images,
-
+<p align="center">
+  <image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/log%20in.jpeg width="100">
+  <image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/list.png width="100">
+</p>
 
 ## Keeping information about the Patients
 
