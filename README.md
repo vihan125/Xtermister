@@ -60,7 +60,7 @@ The implementation of the above tasks in the first section is shown in the image
     <tr>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/patient_view.png width="200"></td>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/patient_view_3.png width="200"></td>
-      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/update_patient.pngwidth="200"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/update_patient.png width="200"></td>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/update_patient_2.png width="200"></td>
     </center>
    </table>
