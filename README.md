@@ -49,7 +49,7 @@ The implementation of the above tasks in the first section is shown in the image
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/blue.png width="200"></td>
     </center>
    </table>
- </p>
+ </center>
 
 * Patient profile
 
