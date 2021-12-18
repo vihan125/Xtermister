@@ -19,8 +19,8 @@ To accomadate these three requiremnets navigation bar with three sections was us
    </table>
 
 All the functionalities of the App is shown in the video below,
- 
-https://user-images.githubusercontent.com/52448954/146652893-6559597f-5714-4fa6-9bae-112658fcd28e.mp4
+
+https://user-images.githubusercontent.com/52448954/146653770-7e503599-b8da-4d38-bbbe-ce161241871f.mp4
 
 Lets look at each of these requirements separately.
 
