@@ -6,7 +6,7 @@ This project is Flutter App that was built to manage pregnent mothers for doctor
 * Calculator that can claculate the expected due date when a date is given
 
 To accomadate these three requiremnets navigation bar with three sections was used. Login page and the view of the application once logged in is shown in the below images,
-<p align="middle">
+<center>
   <table align = "middle">
     <tr>
       <td>Login page</td>
@@ -17,7 +17,7 @@ To accomadate these three requiremnets navigation bar with three sections was us
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/list.png width="300" height = "600"></td>
     </tr>
    </table>
- </p>
+ </center>
 
 Lets look at each of these requirements separately.
 
@@ -34,7 +34,7 @@ In this section required tasks are as follows,
 The implementation of the above tasks in the first section is shown in the images below,
 
 * Patients list and sorting them
-<p align="middle">
+<center>
   <table align = "middle">
     <tr>
       <td>Using due date</td>
@@ -47,7 +47,7 @@ The implementation of the above tasks in the first section is shown in the image
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/red.png width="200"></td>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/orange.png width="200"></td>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/blue.png width="200"></td>
-    </tr>
+    </center>
    </table>
  </p>
 
