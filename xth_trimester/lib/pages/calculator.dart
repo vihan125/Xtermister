@@ -164,7 +164,7 @@ class _CalculatorState extends State<Calculator> with AutomaticKeepAliveClientMi
                       )),
                 ),
                 calendarController: _controller,
-                onDaySelected: (day,events){
+                onDaySelected: (day,events,_){
                   DateTime today = DateTime.now();
                   int ageDiff = (today.difference(day).inHours/24).round();
                   DateTime dueDate;
