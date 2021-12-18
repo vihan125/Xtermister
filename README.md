@@ -20,6 +20,8 @@ To accomadate these three requiremnets navigation bar with three sections was us
 
 All the functionalities of the App is shown in the video below,
 
+https://github.com/vihan125/Xtermister/blob/main/Demonstration/Video/App_demo.mp4
+
 Lets look at each of these requirements separately.
 
 ## Keeping information about the mothers
