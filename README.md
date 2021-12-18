@@ -96,7 +96,7 @@ The implementation of the above tasks in the calendar is shown in the images bel
     <tr>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/calender_1.png width="200"></td>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/calender_2.png width="200"></td>
-      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/calender_2.png width="200"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/calender_3.png width="200"></td>
     </center>
    </table>
 
@@ -118,7 +118,7 @@ From the above methods, Calculation is only implemented to the LMP method due to
     <tr>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/calculator_1.png width="200"></td>
       <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/calculator_2.png width="200"></td>
-      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/calculator_2.png width="200"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/calculator_3.png width="200"></td>
     </center>
    </table>
  
