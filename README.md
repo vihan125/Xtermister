@@ -13,8 +13,8 @@ To accomadate these three requiremnets navigation bar with three sections was us
        <td>Logged in view</td>
     </tr>
     <tr>
-      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/log%20in.jpeg width="300" height="600"></td>
-      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/list.png width="300" height = "600"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/log%20in.jpeg width="200" height="400"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/list.png width="200" height = "400"></td>
     </tr>
    </table>
 
@@ -107,6 +107,7 @@ Using this calculator doctor should be able to calculate the due date of a mothe
 * CD - Cycle Day
 * US - date of Ultra sound Scan
 * EDC - Estimated date of confinement
+
 From the above methods, Calculation is only implemented to the LMP method due to lack of domain knowledge. Implementation of the calculator is shown below,
 
    <table>
