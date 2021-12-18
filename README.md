@@ -18,6 +18,7 @@ To accomadate these three requiremnets navigation bar with three sections was us
     </tr>
    </table>
 
+All the functionalities of the App is shown in the video below,
 
 Lets look at each of these requirements separately.
 
