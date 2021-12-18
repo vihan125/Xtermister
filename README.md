@@ -17,12 +17,20 @@ To accomadate these three requiremnets navigation bar with three sections was us
   </tr>
  </table>
 
+Lets look at each of these requirements separately.
+
 ## Keeping information about the Patients
 
-In t
+In this section required tasks are as follows,
 * keep a list of all the pregnent patients that a doctor is consulting
 * A categorization of the mother based on their expected  due date
 * Sort patients according to each category and due date
 * Search patients by name
 * Maintain a profile for each patient with the ability of archiving patient when the baby is born, call the patient when necessary, and to keep special notes about patient
-* 
+* Create a new patient profile
+
+The implementation of the above tasks in the first section is shown in the images below,
+
+* Patients list and sorting them
+
+
