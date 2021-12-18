@@ -7,7 +7,7 @@ This project is Flutter App that was built to manage pregnent mothers for doctor
 
 To accomadate these three requiremnets navigation bar with three sections was used. Login page and the view of the application once logged in is shown in the below images,
 
-  <table style = "margin-left:auto;margin-right:auto;">
+  <table align = "middle">
     <tr>
       <td>Login page</td>
        <td>Logged in view</td>
@@ -33,7 +33,7 @@ In this section required tasks are as follows,
 
 The implementation of the above tasks in the first section is shown in the images below,
 
-* Patients list and sorting them
+* Patients categorizing, listing, and sorting
 <center>
   <table align = "middle">
     <tr>
@@ -50,4 +50,6 @@ The implementation of the above tasks in the first section is shown in the image
     </center>
    </table>
  </p>
+
+* Patient profile
 
