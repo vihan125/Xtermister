@@ -6,16 +6,18 @@ This project is Flutter App that was built to manage pregnent mothers for doctor
 * Calculator that can claculate the expected due date when a date is given
 
 To accomadate these three requiremnets navigation bar with three sections was used. Login page and the view of the application once logged in is shown in the below images,
-<table align = "middle">
-  <tr>
-    <td>Login page</td>
-     <td>Logged in view</td>
-  </tr>
-  <tr>
-    <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/log%20in.jpeg width="300" height="600"></td>
-    <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/list.png width="300" height = "600"></td>
-  </tr>
- </table>
+<p align="middle">
+  <table align = "middle">
+    <tr>
+      <td>Login page</td>
+       <td>Logged in view</td>
+    </tr>
+    <tr>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/log%20in.jpeg width="300" height="600"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/list.png width="300" height = "600"></td>
+    </tr>
+   </table>
+ </p>
 
 Lets look at each of these requirements separately.
 
@@ -32,5 +34,20 @@ In this section required tasks are as follows,
 The implementation of the above tasks in the first section is shown in the images below,
 
 * Patients list and sorting them
-
+<p align="middle">
+  <table align = "middle">
+    <tr>
+      <td>Using due date</td>
+      <td>Using category (red)</td>
+      <td>Using category (orange)</td>
+      <td>Using category (blue)</td>
+    </tr>
+    <tr>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/list_sort.png width="200"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/red.png width="200"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/orange.png width="200"></td>
+      <td><image src = https://github.com/vihan125/Xtermister/blob/main/Demonstration/Images/blue.png width="200"></td>
+    </tr>
+   </table>
+ </p>
 
